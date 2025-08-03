@@ -1,5 +1,6 @@
 package cn.rlint.dpihelper;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,13 +10,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
     private int originalDpi = 0;
     private int currentDpi = 0;
     private static final String DPI_FILE_NAME = "original_dpi.txt";
@@ -23,9 +22,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
-        }
         setContentView(R.layout.activity_main);
 
         EditText editDpi = findViewById(R.id.editDpi);
@@ -33,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         Button btnRestoreDpi = findViewById(R.id.btnRestoreDpi);
         Button btnStartDeveloperSetting = findViewById(R.id.btnStartDeveloperSetting);
         TextView txtRestoreInfo = findViewById(R.id.txtRestoreInfo);
+
         currentDpi = GetCurrentDpi();
         editDpi.setText(String.valueOf(currentDpi));
         originalDpi = ReadOriginalDpiFromFile();
@@ -46,30 +43,28 @@ public class MainActivity extends AppCompatActivity {
             String dpiStr = editDpi.getText().toString();
             if (!dpiStr.isEmpty()) {
                 int newDpi = Integer.parseInt(dpiStr);
-                SetDpi(newDpi,true);
+                SetDpi(newDpi, true);
                 int updatedDpi = GetCurrentDpi();
                 editDpi.setText(String.valueOf(updatedDpi));
             }
         });
 
         btnRestoreDpi.setOnClickListener(v -> {
-            SetDpi(originalDpi,false);
+            SetDpi(originalDpi, false);
             int updatedDpi = GetCurrentDpi();
             editDpi.setText(String.valueOf(updatedDpi));
         });
 
-        btnStartDeveloperSetting.setOnClickListener(v->{
+        btnStartDeveloperSetting.setOnClickListener(v -> {
             OpenDeveloperSetting();
         });
-
-
     }
 
     private int GetCurrentDpi() {
         try {
             return Settings.Secure.getInt(getContentResolver(), "display_density_forced");
         } catch (Settings.SettingNotFoundException e) {
-            return 320; // 哎呦不中嘞 320启动
+            return 320; // 默认320
         }
     }
 
@@ -121,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void OpenDeveloperSetting(){
+    private void OpenDeveloperSetting() {
         Intent intent = new Intent("com.android.settings.APPLICATION_DEVELOPMENT_SETTINGS");
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
