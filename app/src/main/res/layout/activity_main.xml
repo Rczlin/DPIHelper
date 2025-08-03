@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="0dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:textColor="?android:textColorPrimary"
+            android:text="DPIHelper" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"    android:background="#FFCCCCCC"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp" />
+        <EditText
+        android:id="@+id/editDpi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="输入目标DPI"
+        android:inputType="number" />
+        <Button
+        android:id="@+id/btnSetDpi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="设置DPI" />
+        <Button
+        android:id="@+id/btnRestoreDpi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="还原到默认DPI" />
+        <TextView
+        android:id="@+id/txtRestoreInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="" />
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="如果权限不足就是默认的 DPI 320" />
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="修改后大概率都不是马上生效的 重启生效" />
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="哈吉米哈吉米哈吉米 我不想上学 XwX" />
+    </LinearLayout>
+</ScrollView>
