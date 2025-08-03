@@ -9,6 +9,7 @@ import android.provider.Settings;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -91,21 +92,27 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void SetDpi(int dpi,boolean needsure) {
-        if(needsure){
+    private void SetDpi(int dpi, boolean needsure) {
+        Runnable modifyDpi = () -> {
+            try {
+                Settings.Secure.putInt(getContentResolver(), "display_density_forced", dpi);
+                Toast.makeText(this, "修改完成 重启试试", Toast.LENGTH_LONG).show();
+            } catch (SecurityException e) {
+                Toast.makeText(this, "修改失败 尝试重新执行授权命令?", Toast.LENGTH_LONG).show();
+            } catch (Exception e) {
+                Toast.makeText(this, "修改失败: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        };
+
+        if (needsure) {
             new AlertDialog.Builder(this)
                     .setTitle("确认更改 DPI")
                     .setMessage("你确定要将 DPI 设置为 " + dpi + " 吗？")
-                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Settings.Secure.putInt(getContentResolver(), "display_density_forced", dpi);
-                        }
-                    })
+                    .setPositiveButton("确定", (dialog, which) -> modifyDpi.run())
                     .setNegativeButton("取消", null)
                     .show();
-        }else {
-            Settings.Secure.putInt(getContentResolver(), "display_density_forced", dpi);
+        } else {
+            modifyDpi.run();
         }
     }
 }
