@@ -1,10 +1,8 @@
 package cn.rlint.dpihelper;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.pm.ActivityInfo;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.Settings;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         EditText editDpi = findViewById(R.id.editDpi);
         Button btnSetDpi = findViewById(R.id.btnSetDpi);
         Button btnRestoreDpi = findViewById(R.id.btnRestoreDpi);
+        Button btnStartDeveloperSetting = findViewById(R.id.btnStartDeveloperSetting);
         TextView txtRestoreInfo = findViewById(R.id.txtRestoreInfo);
         currentDpi = GetCurrentDpi();
         editDpi.setText(String.valueOf(currentDpi));
@@ -58,6 +57,12 @@ public class MainActivity extends AppCompatActivity {
             int updatedDpi = GetCurrentDpi();
             editDpi.setText(String.valueOf(updatedDpi));
         });
+
+        btnStartDeveloperSetting.setOnClickListener(v->{
+            OpenDeveloperSetting();
+        });
+
+
     }
 
     private int GetCurrentDpi() {
@@ -114,5 +119,11 @@ public class MainActivity extends AppCompatActivity {
         } else {
             modifyDpi.run();
         }
+    }
+
+    private void OpenDeveloperSetting(){
+        Intent intent = new Intent("com.android.settings.APPLICATION_DEVELOPMENT_SETTINGS");
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 }

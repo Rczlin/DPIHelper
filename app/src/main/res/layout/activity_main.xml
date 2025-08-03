@@ -55,5 +55,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="哈吉米哈吉米哈吉米 我不想上学 XwX" />
+        <Button
+            android:id="@+id/btnStartDeveloperSetting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="启动原生开发者设置" />
     </LinearLayout>
 </ScrollView>
